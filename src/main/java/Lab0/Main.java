@@ -1,5 +1,9 @@
 package Lab0;
 
+import javafx.scene.transform.Scale;
+
+import java.util.Scanner;
+
 public class Main {
     public static void main(String [] args) {
         /*Variant18 variant18 = new Variant18();
@@ -21,31 +25,15 @@ public class Main {
         System.out.println(arrayMatrix[0].length);
         System.out.println(arrayMatrix[0][2]);
         */
+        Scanner scan = new Scanner(System.in);
+        int num = scan.nextInt();
+        int sum = num%10;
+        int res;
 
-        int[][] arrayMatrix =  { {1, 2},
-                                 {4, 5}
-                                 };
 
-        int[] resultArray = new int[arrayMatrix.length * arrayMatrix.length];
-        int r = 0, k = 0, e = arrayMatrix.length - 1;
-        int flag = 1, o = arrayMatrix.length;
-        for(int a = 0; a < arrayMatrix.length; a++) {
 
-            for(int i = 0; i < o; i++)
-                resultArray[r++] = arrayMatrix[i][k];
 
-            for(int j = flag; j < arrayMatrix.length; j++)
-                resultArray[r++] = arrayMatrix[e][j];
 
-            flag++;
-            k++;
-            e--;
-            o--;
-        }
-
-        for(int v: resultArray){
-            System.out.println(v);
-        }
     }
 
 }

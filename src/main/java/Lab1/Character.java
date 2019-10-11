@@ -4,36 +4,74 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Character {
-    private static float maxWeight;
-    private static int maxHealth;
+    private static Integer maxWeight = 10;
+    private static Integer maxHealth = 100;
     private Set<Weapon> weapons;
-    private int health;
+    private Integer health;
     private String name;
-
 
     {
         weapons = new HashSet<Weapon>();
+        health = 100;
     }
 
-    public void setMaxWeight(float maxWeight) {
-        this.maxWeight = maxWeight;
+    public Character(String name) {
+        this.name = name;
     }
 
-    public float getMaxWeight() {
+    public void setHealth(Integer health) {
+        if(health > maxHealth)
+            this.health = maxHealth;
+        else
+            this.health = health;
+    }
+
+    public Integer getHealth() {
+        return health;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static void setMaxWeight(int maxWeight) {
+        Character.maxWeight = maxWeight;
+    }
+
+    public static Integer getMaxWeight() {
         return maxWeight;
     }
-//інший метод   тут міняти серий знає)))
-    public boolean addWeapon(Weapon weapon) {
+
+    public Integer getAllWeaponWeight() {
         int sum = 0;
         for (Weapon x : weapons) {
             sum += x.getWeight();
         }
-        if(sum + weapon.getWeight() > maxWeight)
+        return sum;
+    }
+
+    public boolean addWeapon(Weapon weapon) {
+        if(getAllWeaponWeight() + weapon.getWeight() > maxWeight)
             return false;
 
         weapons.add(weapon);
-
         return true;
+    }
+
+    public Weapon getBestWeapon(Integer distance) {
+        Weapon result = null;
+        for(Weapon x : weapons) {
+            if(x.getMaxRange() >= distance) {
+                if(result == null) {
+                    result = x;
+                    continue;
+                }
+                float efficiency1 = x.getDamage() / (float) x.getRateOfFire();
+                float efficiency2 = result.getDamage() / (float) result.getRateOfFire();
+                if(efficiency1 > efficiency2) result = x;
+            }
+        }
+        return result;
     }
 //чи є такого типу і скільки   сортувати по дамадж разом
 

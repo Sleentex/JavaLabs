@@ -10,10 +10,10 @@ public class Weapon {
 
     private String name;
     private WeaponType weaponType;
-    private float weight;
-    private int damage;
+    private Integer weight;
+    private Integer damage;
     private Integer ammo; //патрони
-    private Integer rateOfFire; //скорострільність
+    private Integer rateOfFire; //задержка перед наступним вистрелом
     private Integer maxRange; //максимальна дальність
 
     private Weapon() {
@@ -22,12 +22,11 @@ public class Weapon {
 
     public String getName() { return name; }
     public WeaponType getWeaponType() { return weaponType; }
-    public float getWeight() { return weight; }
+    public Integer getWeight() { return weight; }
     public Integer getDamage() { return damage; }
     public Integer getAmmo() { return ammo; }
     public Integer getRateOfFire() { return rateOfFire; }
     public Integer getMaxRange() { return maxRange; }
-
 
     @Override
     public String toString() {
@@ -49,12 +48,8 @@ public class Weapon {
 
         Weapon weapon = (Weapon) o;
 
-        if (Float.compare(weapon.weight, weight) != 0) return false;
-        if (Float.compare(weapon.damage, damage) != 0) return false;
         if (name != null ? !name.equals(weapon.name) : weapon.name != null) return false;
         if (weaponType != weapon.weaponType) return false;
-        if (ammo != null ? !ammo.equals(weapon.ammo) : weapon.ammo != null) return false;
-        if (rateOfFire != null ? !rateOfFire.equals(weapon.rateOfFire) : weapon.rateOfFire != null) return false;
         return maxRange != null ? maxRange.equals(weapon.maxRange) : weapon.maxRange == null;
     }
 
@@ -62,8 +57,8 @@ public class Weapon {
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (weaponType != null ? weaponType.hashCode() : 0);
-        result = 31 * result + (weight != +0.0f ? Float.floatToIntBits(weight) : 0);
-        result = 31 * result + (damage != +0.0f ? Float.floatToIntBits(damage) : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (damage != null ? damage.hashCode() : 0);
         result = 31 * result + (ammo != null ? ammo.hashCode() : 0);
         result = 31 * result + (rateOfFire != null ? rateOfFire.hashCode() : 0);
         result = 31 * result + (maxRange != null ? maxRange.hashCode() : 0);
@@ -88,8 +83,9 @@ public class Weapon {
             return this;
         }
 
-        public Builder setMaxWeight(float maxWeight) {
-            weapon.weight = maxWeight;
+        public Builder setWeight(Integer weight) throws IllegalArgumentException {
+            if(weight < 0) throw new IllegalArgumentException("jdnvdfnjdfvnj");
+            weapon.weight = weight;
             return this;
         }
 
