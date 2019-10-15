@@ -1,7 +1,6 @@
-package Lab1;
+package Lab1.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Character {
     private static Integer maxWeight = 10;
@@ -42,6 +41,10 @@ public class Character {
         return maxWeight;
     }
 
+    public Set<Weapon> getWeapons() {
+        return weapons;
+    }
+
     public Integer getAllWeaponWeight() {
         int sum = 0;
         for (Weapon x : weapons) {
@@ -58,21 +61,7 @@ public class Character {
         return true;
     }
 
-    public Weapon getBestWeapon(Integer distance) {
-        Weapon result = null;
-        for(Weapon x : weapons) {
-            if(x.getMaxRange() >= distance) {
-                if(result == null) {
-                    result = x;
-                    continue;
-                }
-                float efficiency1 = x.getDamage() / (float) x.getRateOfFire();
-                float efficiency2 = result.getDamage() / (float) result.getRateOfFire();
-                if(efficiency1 > efficiency2) result = x;
-            }
-        }
-        return result;
-    }
+
 //чи є такого типу і скільки   сортувати по дамадж разом
 
 }

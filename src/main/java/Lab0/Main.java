@@ -1,8 +1,8 @@
 package Lab0;
 
-import javafx.scene.transform.Scale;
-
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String [] args) {
@@ -25,10 +25,16 @@ public class Main {
         System.out.println(arrayMatrix[0].length);
         System.out.println(arrayMatrix[0][2]);
         */
-        Scanner scan = new Scanner(System.in);
-        int num = scan.nextInt();
-        int sum = num%10;
-        int res;
+        HashSet myHashSet = new HashSet();
+        myHashSet.add(1);
+        myHashSet.add(23);
+        myHashSet.add(45);
+        myHashSet.add(12);
+
+        TreeSet myTreeSet = new TreeSet();
+        myTreeSet.addAll(myHashSet);
+        System.out.println(myTreeSet);
+
 
 
 

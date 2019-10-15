@@ -1,12 +1,18 @@
-package Lab1;
+package Lab1.model;
+
+import Lab1.service.CharacterService;
 
 public class Game {
+    private CharacterService characterService1;
+    private CharacterService characterService2;
     private Character firstCharacter;
     private Character secondCharacter;
 
     public Game(Character firstCharacter, Character secondCharacter) {
         this.firstCharacter = firstCharacter;
         this.secondCharacter = secondCharacter;
+        characterService1 = new CharacterService(firstCharacter);
+        characterService2 = new CharacterService(secondCharacter);
     }
 
     /**
@@ -19,8 +25,8 @@ public class Game {
         Integer i = 0;
 
         while(true) {
-            Weapon firstWeapon = firstCharacter.getBestWeapon(currentDistance);
-            Weapon secondWeapon = secondCharacter.getBestWeapon(currentDistance);
+            Weapon firstWeapon = characterService1.getBestWeapon(currentDistance);
+            Weapon secondWeapon = characterService2.getBestWeapon(currentDistance);
             if(firstWeapon != null && i % firstWeapon.getRateOfFire() == 0) {
                 secondCharacter.setHealth(secondCharacter.getHealth() - firstWeapon.getDamage());//змешити хп у 2перонажа і  перевірити чи у нього стало не менше 0
                 if(secondCharacter.getHealth() <= 0) return firstCharacter;
@@ -33,5 +39,6 @@ public class Game {
             currentDistance--;
             i++;
         }
+
     }
 }
