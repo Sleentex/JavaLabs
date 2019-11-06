@@ -60,8 +60,4 @@ public class Character {
         weapons.add(weapon);
         return true;
     }
-
-
-//чи є такого типу і скільки   сортувати по дамадж разом
-
 }

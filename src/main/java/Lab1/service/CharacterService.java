@@ -8,11 +8,12 @@ import java.util.TreeSet;
 
 public class CharacterService {
     private Character character;
+
     public CharacterService(Character character) {
         this.character = character;
     }
-
-    public Weapon getBestWeapon(Integer distance) {
+    // best = effect
+    public Weapon getEffectWeapon(Integer distance) {
         Weapon result = null;
         for(Weapon x : character.getWeapons()) {
             if(x.getMaxRange() >= distance) {
@@ -39,7 +40,7 @@ public class CharacterService {
     public Integer countWeaponType(Weapon.WeaponType weaponType) {
         Integer countWeaponType = 0;
         for(Weapon x: character.getWeapons()) {
-            if(x.getWeaponType() == weaponType)  countWeaponType++;
+            if(x.getWeaponType().equals(weaponType))  countWeaponType++;
         }
         return countWeaponType;
     }

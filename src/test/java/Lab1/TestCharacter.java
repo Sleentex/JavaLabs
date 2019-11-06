@@ -71,7 +71,7 @@ public class TestCharacter {
         character.addWeapon(weaponAWP);
         character.addWeapon(weaponM4A1);
 
-        Weapon expectedWeapon = characterService.getBestWeapon(450);
+        Weapon expectedWeapon = characterService.getEffectWeapon(450);
         Assert.assertEquals(expectedWeapon, weaponAWP);
     }
 

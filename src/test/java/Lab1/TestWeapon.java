@@ -36,4 +36,5 @@ public class TestWeapon {
                 .setName("AK-47")
                 .build();
     }
+
 }

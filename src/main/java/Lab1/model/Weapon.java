@@ -95,7 +95,7 @@ public class Weapon {
          * @throws IllegalArgumentException when try set weight lower than zero
          */
         public Builder setWeight(Integer weight) throws IllegalArgumentException {
-            if(weight <= 0) throw new IllegalArgumentException("Weight must be greater than zero");
+            if(weight <= 0 || weight > 10) throw new IllegalArgumentException("Weight must be greater than zero");
             weapon.weight = weight;
             return this;
         }
@@ -107,10 +107,10 @@ public class Weapon {
          * @throws IllegalArgumentException when try set damage lower than zero
          */
         public Builder setDamage(Integer damage) throws IllegalArgumentException {
-            if(damage <= 0) throw new IllegalArgumentException("Damage must be greater than zero");
+            if(damage <= 0 || damage > 100) throw new IllegalArgumentException("Damage must be greater than zero");
             weapon.damage = damage;
             return this;
-        }
+        } // damage > 0
 
         /**
          *
@@ -119,7 +119,7 @@ public class Weapon {
          * @throws IllegalArgumentException when try set ammo lower than zero
          */
         public Builder setAmmo(Integer ammo) throws IllegalArgumentException {
-            if(ammo <= 0) throw new IllegalArgumentException("Ammo must be greater than zero");
+            if(ammo <= 0 || ammo > 90) throw new IllegalArgumentException("Ammo must be greater than zero");
             weapon.ammo = ammo;
             return this;
         }
@@ -143,7 +143,7 @@ public class Weapon {
          * @throws IllegalArgumentException when try set maxRange lower than zero
          */
         public Builder setMaxRange(Integer maxRange) throws IllegalArgumentException {
-            if(maxRange < 0) throw new IllegalArgumentException("MaxRange must be greater than zero");
+            if(maxRange < 0 || maxRange > 1000) throw new IllegalArgumentException("MaxRange must be greater than zero");
             weapon.maxRange = maxRange;
             return this;
         }
@@ -168,7 +168,6 @@ public class Weapon {
                 String exceptionMessage = "The following fields must be initialized: " + emptyFields.toString();
                 throw new IllegalArgumentException(exceptionMessage);
             }
-
             return weapon;
         }
     }
