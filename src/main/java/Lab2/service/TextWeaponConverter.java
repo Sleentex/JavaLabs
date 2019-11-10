@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TextWeaponConverter implements Converter<Weapon> {
-    final Integer MAX_FIELDS = 7;
+    private final Integer COUNT_FIELDS = 7;
 
     private Object[] getWeaponFields(Weapon weapon) {
         return new Object[] {
@@ -37,7 +37,7 @@ public class TextWeaponConverter implements Converter<Weapon> {
         try {
             String[] arrTxt = txtString.split("\\|\\|");
 
-            if(arrTxt.length != MAX_FIELDS)
+            if(arrTxt.length != COUNT_FIELDS)
                 throw new Exception("Length don`t equal 7!");
 
             Weapon weapon = new Weapon.Builder()

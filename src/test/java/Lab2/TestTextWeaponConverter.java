@@ -6,6 +6,7 @@ import Lab2.service.TextWeaponConverter;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestTextWeaponConverter {
@@ -44,9 +45,17 @@ public class TestTextWeaponConverter {
         Assert.assertEquals(weapon, weaponActual);
     }
 
-    @Test(expectedExceptions = ConvertException.class)
-    public void negativeDeserializeString() throws ConvertException {
-        String txtString = "M4A1|RIFLE||4||4||90||4||150";
+    @DataProvider
+    public Object[][] negativeDeserializeStringDataProvider() {
+        return new Object[][] {
+                {"M4A1|RIFLE||4||4||90||4||150"},
+                {"RIFLE||4||4||90||4||150"},
+                {"M4A1||RIFLE||hereCan`tbeText||4||90||4||150"},
+                {"M4A1||RIFLE||4||4||90||4||150.1"}};
+    }
+
+    @Test(expectedExceptions = ConvertException.class, dataProvider = "negativeDeserializeStringDataProvider")
+    public void negativeDeserializeString(String txtString) throws ConvertException {
         textWeaponConverter.deserializeString(txtString);
     }
 }
