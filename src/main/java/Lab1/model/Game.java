@@ -25,8 +25,8 @@ public class Game {
         Integer i = 0;
 
         while(true) {
-            Weapon firstWeapon = characterService1.getEffectWeapon(currentDistance);
-            Weapon secondWeapon = characterService2.getEffectWeapon(currentDistance);
+            Weapon firstWeapon = characterService1.getEffectiveWeapon(currentDistance);
+            Weapon secondWeapon = characterService2.getEffectiveWeapon(currentDistance);
             if(firstWeapon != null && i % firstWeapon.getRateOfFire() == 0) {
                 secondCharacter.setHealth(secondCharacter.getHealth() - firstWeapon.getDamage());//змешити хп у 2перонажа і  перевірити чи у нього стало не менше 0
                 if(secondCharacter.getHealth() <= 0) return firstCharacter;

@@ -1,6 +1,8 @@
-package Lab1.model;
+package Lab3.model;
 
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class Character {
     private static Integer maxWeight = 10;
@@ -13,6 +15,8 @@ public class Character {
         weapons = new HashSet<Weapon>();
         health = 100;
     }
+
+    public Character() {}
 
     public Character(String name) {
         this.name = name;

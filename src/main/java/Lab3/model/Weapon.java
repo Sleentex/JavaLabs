@@ -1,14 +1,10 @@
-package Lab2.model;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+package Lab3.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@JsonDeserialize(builder = Weapon.Builder.class)
-public class Weapon implements Serializable {
+public class Weapon implements Comparable<Weapon> {
 
     public enum WeaponType {
         PISTOL,
@@ -46,6 +42,11 @@ public class Weapon implements Serializable {
                 ammo + "ammo " +
                 rateOfFire + "rateOfFire " +
                 maxRange + "maxRange";
+    }
+
+    @Override
+    public int compareTo(Weapon weapon) {
+        return name.compareTo(weapon.name);
     }
 
     @Override

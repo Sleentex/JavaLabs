@@ -92,10 +92,11 @@ public class Weapon {
          *
          * @param weight Integer
          * @return instance of this Builder
-         * @throws IllegalArgumentException when try set weight lower than zero
+         * @throws IllegalArgumentException when try set weight lower than zero and more than 10
          */
         public Builder setWeight(Integer weight) throws IllegalArgumentException {
-            if(weight <= 0 || weight > 10) throw new IllegalArgumentException("Weight must be greater than zero");
+            if(weight <= 0 || weight > 10)
+                throw new IllegalArgumentException("Weight must be greater than 0 and less than 10");
             weapon.weight = weight;
             return this;
         }
@@ -104,22 +105,24 @@ public class Weapon {
          *
          * @param damage Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set damage lower than zero
+         * @throws IllegalArgumentException when try set damage lower than zero and more than 100
          */
         public Builder setDamage(Integer damage) throws IllegalArgumentException {
-            if(damage <= 0 || damage > 100) throw new IllegalArgumentException("Damage must be greater than zero");
+            if(damage <= 0 || damage > 100)
+                throw new IllegalArgumentException("Damage must be greater than 0 and less than 100");
             weapon.damage = damage;
             return this;
-        } // damage > 0
+        }
 
         /**
          *
          * @param ammo Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set ammo lower than zero
+         * @throws IllegalArgumentException when try set ammo lower than zero and more than 90
          */
         public Builder setAmmo(Integer ammo) throws IllegalArgumentException {
-            if(ammo <= 0 || ammo > 90) throw new IllegalArgumentException("Ammo must be greater than zero");
+            if(ammo <= 0 || ammo > 90)
+                throw new IllegalArgumentException("Ammo must be greater than zero and less than 90");
             weapon.ammo = ammo;
             return this;
         }

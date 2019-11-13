@@ -1,4 +1,4 @@
-package Lab2.model;
+package Lab4.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
@@ -17,6 +17,7 @@ public class Weapon implements Serializable {
     }
 
     // all fields cant be changed and assigned once in builder
+
     private String name;
     private WeaponType weaponType;
     private Integer weight;

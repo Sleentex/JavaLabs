@@ -12,8 +12,13 @@ public class CharacterService {
     public CharacterService(Character character) {
         this.character = character;
     }
-    // best = effect
-    public Weapon getEffectWeapon(Integer distance) {
+
+    /**
+     *
+     * @param distance distance between players
+     * @return effective weapon
+     */
+    public Weapon getEffectiveWeapon(Integer distance) {
         Weapon result = null;
         for(Weapon x : character.getWeapons()) {
             if(x.getMaxRange() >= distance) {
@@ -29,6 +34,10 @@ public class CharacterService {
         return result;
     }
 
+    /**
+     *
+     * @return sorted weapons by damage
+     */
     public SortedSet<Weapon> sortWeaponsByDamage() {
         SortedSet<Weapon> sortedWeapons = new TreeSet<Weapon>((a, b) -> {
             return b.getDamage().compareTo(a.getDamage());
@@ -37,6 +46,11 @@ public class CharacterService {
         return sortedWeapons;
     }
 
+    /**
+     *
+     * @param weaponType type of weapon
+     * @return count of a certain type
+     */
     public Integer countWeaponType(Weapon.WeaponType weaponType) {
         Integer countWeaponType = 0;
         for(Weapon x: character.getWeapons()) {
