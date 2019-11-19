@@ -30,13 +30,15 @@ public class CharacterService {
      * @return sorted weapons by damage
      */
     public SortedSet<Weapon> sortWeaponsByDamage() {
-        SortedSet<Weapon> sortedWeapons = new TreeSet<Weapon>((a, b) -> {
-            return b.getDamage().compareTo(a.getDamage());
-        });
+        SortedSet<Weapon> sortedWeapons = new TreeSet<>((a, b) -> b.getDamage().compareTo(a.getDamage()));
         sortedWeapons.addAll(character.getWeapons());
         return sortedWeapons;
     }
 
+    /**
+     *
+     * @return sorted weapons by MaxRange
+     */
     public SortedSet<Weapon> sortedWeaponsByMaxRange() {
       /*  SortedSet<Weapon> sortedWeapons = new TreeSet<>(new Comparator<Weapon>() {
             @Override
@@ -49,7 +51,12 @@ public class CharacterService {
         return sortedWeapons;
     }
 
-    public boolean searchWeaponsByName(String name) {
+    /**
+     *
+     * @param name we search weapon by this name
+     * @return true if weapon exist, false if one does not exist
+     */
+    public boolean searchWeaponByName(String name) {
         Character result = new Character();
         character.getWeapons().stream()
                 .filter(c -> c.getName().equalsIgnoreCase(name))

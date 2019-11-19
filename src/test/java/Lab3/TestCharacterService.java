@@ -5,19 +5,17 @@ import Lab3.model.Weapon;
 import Lab3.service.CharacterService;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class TestCharacterService {
+    private CharacterService characterService;
+    private Character character;
     private Weapon weaponEagle;
     private Weapon weaponM4A1;
     private Weapon weaponAWP;
     private Weapon weaponAK47;
-    private CharacterService characterService;
-    private Character character;
 
     {
         weaponEagle = new Weapon.Builder()
@@ -77,7 +75,7 @@ public class TestCharacterService {
         character.addWeapon(weaponAWP);
 
         SortedSet<Weapon> sortedWeapons = characterService.sortWeaponsByDamage();
-        SortedSet<Weapon> expectedSortedWeapons = new TreeSet<Weapon>();
+        SortedSet<Weapon> expectedSortedWeapons = new TreeSet<>();
         expectedSortedWeapons.add(weaponAWP);
         expectedSortedWeapons.add(weaponAK47);
 
@@ -111,7 +109,7 @@ public class TestCharacterService {
         character.addWeapon(weaponEagle);
         character.addWeapon(weaponAK47);
 
-        boolean actual = characterService.searchWeaponsByName("Desert Eagle");
+        boolean actual = characterService.searchWeaponByName("Desert Eagle");
         Assert.assertTrue(actual);
     }
 }

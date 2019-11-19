@@ -1,8 +1,14 @@
 package Lab4.model;
 
+import Lab4.service.IntSize;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,18 +24,43 @@ public class Weapon implements Serializable {
 
     // all fields cant be changed and assigned once in builder
 
+    @NotNull(message = "must be not null")
+    private Integer id;
+
+
+    @NotNull(message = "must be not null")
+    @Size(min = 1, max = 20, message = "must be not empty")
     private String name;
+
+    @NotNull(message = "must be not null")
     private WeaponType weaponType;
+
+    @NotNull(message = "must be not null")
+    @IntSize(min = 1, max = 10)
     private Integer weight;
+
+    @NotNull(message = "must be not null")
+    @IntSize(min = 1, max = 100)
     private Integer damage;
+
+    @NotNull(message = "must be not null")
+    @Min(value = 0, message = "can`t be less than 0")
+    @Max(value = 90, message = "can`t be more than 90")
     private Integer ammo; //патрони
+
+    @NotNull(message = "must be not null")
+    @IntSize(min = 0, max = 10)
     private Integer rateOfFire; //задержка перед наступним вистрелом
+
+    @NotNull(message = "must be not null")
+    @IntSize(min = 0, max = 1000)
     private Integer maxRange; //максимальна дальність
 
     private Weapon() {
         //Private constructor to deny creating new instance outside by constructor
     }
 
+    public Integer getId() { return id; }
     public String getName() { return name; }
     public WeaponType getWeaponType() { return weaponType; }
     public Integer getWeight() { return weight; }
@@ -40,13 +71,16 @@ public class Weapon implements Serializable {
 
     @Override
     public String toString() {
-        return  name + " " +
-                weaponType + " " +
-                weight + "kg " +
-                damage + "damage " +
-                ammo + "ammo " +
-                rateOfFire + "rateOfFire " +
-                maxRange + "maxRange";
+        return "Weapon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", weaponType=" + weaponType +
+                ", weight=" + weight + "kg" +
+                ", damage=" + damage +
+                ", ammo=" + ammo +
+                ", rateOfFire=" + rateOfFire +
+                ", maxRange=" + maxRange +
+                '}';
     }
 
     @Override
@@ -56,14 +90,20 @@ public class Weapon implements Serializable {
 
         Weapon weapon = (Weapon) o;
 
+        if (id != null ? !id.equals(weapon.id) : weapon.id != null) return false;
         if (name != null ? !name.equals(weapon.name) : weapon.name != null) return false;
         if (weaponType != weapon.weaponType) return false;
+        if (weight != null ? !weight.equals(weapon.weight) : weapon.weight != null) return false;
+        if (damage != null ? !damage.equals(weapon.damage) : weapon.damage != null) return false;
+        if (ammo != null ? !ammo.equals(weapon.ammo) : weapon.ammo != null) return false;
+        if (rateOfFire != null ? !rateOfFire.equals(weapon.rateOfFire) : weapon.rateOfFire != null) return false;
         return maxRange != null ? maxRange.equals(weapon.maxRange) : weapon.maxRange == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (weaponType != null ? weaponType.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (damage != null ? damage.hashCode() : 0);
@@ -84,6 +124,11 @@ public class Weapon implements Serializable {
             weapon = new Weapon();
         }
 
+        public Builder setId(Integer id) {
+            weapon.id = id;
+            return this;
+        }
+
         public Builder setName(String name) {
             weapon.name = name;
             return this;
@@ -98,11 +143,8 @@ public class Weapon implements Serializable {
          *
          * @param weight Integer
          * @return instance of this Builder
-         * @throws IllegalArgumentException when try set weight lower than zero and more than 10
          */
-        public Builder setWeight(Integer weight) throws IllegalArgumentException {
-            if(weight <= 0 || weight > 10)
-                throw new IllegalArgumentException("Weight must be greater than 0 and less than 10");
+        public Builder setWeight(Integer weight) {
             weapon.weight = weight;
             return this;
         }
@@ -111,11 +153,8 @@ public class Weapon implements Serializable {
          *
          * @param damage Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set damage lower than zero and more than 100
          */
         public Builder setDamage(Integer damage) throws IllegalArgumentException {
-            if(damage <= 0 || damage > 100)
-                throw new IllegalArgumentException("Damage must be greater than 0 and less than 100");
             weapon.damage = damage;
             return this;
         }
@@ -124,11 +163,8 @@ public class Weapon implements Serializable {
          *
          * @param ammo Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set ammo lower than zero and more than 90
          */
         public Builder setAmmo(Integer ammo) throws IllegalArgumentException {
-            if(ammo <= 0 || ammo > 90)
-                throw new IllegalArgumentException("Ammo must be greater than zero and less than 90");
             weapon.ammo = ammo;
             return this;
         }
@@ -137,10 +173,8 @@ public class Weapon implements Serializable {
          *
          * @param rateOfFire Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set rateOfFire lower than zero
          */
         public Builder setRateOfFire(Integer rateOfFire) throws IllegalArgumentException {
-            if(rateOfFire < 0) throw new IllegalArgumentException("RateOfFire must be greater than zero");
             weapon.rateOfFire = rateOfFire;
             return this;
         }
@@ -149,10 +183,8 @@ public class Weapon implements Serializable {
          *
          * @param maxRange Integer
          * @return instance of Builder
-         * @throws IllegalArgumentException when try set maxRange lower than zero
          */
         public Builder setMaxRange(Integer maxRange) throws IllegalArgumentException {
-            if(maxRange < 0 || maxRange > 1000) throw new IllegalArgumentException("MaxRange must be greater than zero");
             weapon.maxRange = maxRange;
             return this;
         }
@@ -160,10 +192,21 @@ public class Weapon implements Serializable {
         /**
          *
          * @return instance of Weapon
-         * @throws IllegalArgumentException if some fields do not set
+         * @throws IllegalStateException if some fields do not set
          */
-        public Weapon build() throws IllegalArgumentException {
-            Set<String> emptyFields = new HashSet<String>();
+        public Weapon build() throws IllegalStateException {
+            Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+            Set<ConstraintViolation<Weapon>> constraintViolations = validator.validate(weapon); // проверка всех ограничений
+
+            if (constraintViolations.size() > 0) {
+                Set<String> exceptionDetails = new HashSet<>();
+                for (ConstraintViolation<Weapon> violation : constraintViolations) {
+                    exceptionDetails.add(violation.getPropertyPath().toString() + " " + violation.getMessage());
+                }
+                throw new IllegalStateException(exceptionDetails.toString());
+            }
+            return weapon;
+            /*Set<String> emptyFields = new HashSet<String>();
 
             if(weapon.name == null) emptyFields.add("name");
             if(weapon.ammo == null) emptyFields.add("ammo");
@@ -177,7 +220,7 @@ public class Weapon implements Serializable {
                 String exceptionMessage = "The following fields must be initialized: " + emptyFields.toString();
                 throw new IllegalArgumentException(exceptionMessage);
             }
-            return weapon;
+            return weapon;*/
         }
     }
 }
