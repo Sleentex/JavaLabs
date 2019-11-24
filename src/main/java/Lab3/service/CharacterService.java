@@ -55,7 +55,7 @@ public class CharacterService {
      *
      * @param name we search weapon by this name
      * @return true if weapon exist, false if one does not exist
-     */
+     *///is exist
     public boolean searchWeaponByName(String name) {
         Character result = new Character();
         character.getWeapons().stream()

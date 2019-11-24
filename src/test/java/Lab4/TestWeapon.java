@@ -10,7 +10,7 @@ public class TestWeapon {
                 .setId(1)
                 .setName("M4A1")
                 .setWeaponType(Weapon.WeaponType.RIFLE)
-                .setDamage(4)
+                .setDamage(2)
                 .setWeight(4)
                 .setAmmo(90)
                 .setMaxRange(150)

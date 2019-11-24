@@ -13,7 +13,7 @@ public @interface IntSize {
     int min();
     int max();
 
-    String message() default "{lab4.service.IntSize}";
+    String message() default "{Lab4.service.IntSize}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
