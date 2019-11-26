@@ -12,26 +12,16 @@ import java.util.Properties;
 
 public class PostgresConnection
 {
-    private final static String HOST = "jdbc:postgresql://localhost:5432/weapon";
-    private final static String USERNAME = "postgres";
-    private final static String PASSWORD = "111231";
+    private static final String PROPERTY_PATH = "src/main/resources/database.properties";
+    private Properties properties = new Properties();
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(HOST, USERNAME, PASSWORD);
-    }
-   /* private final static String PROPERTIES_PATH = "database.properties";
-    private Properties properties = new Properties();*/
-
-   /* private Connection createConnection() throws PostgresConnectionException {
+    private Connection createConnection() throws PostgresConnectionException {
         try {
-            properties.load(new FileInputStream(PROPERTIES_PATH));
-            System.out.println("kaka");
-            System.out.println(properties.getProperty("jdbc.url"));
-            System.out.println(properties.getProperty("login"));
+            properties.load(new FileInputStream(PROPERTY_PATH));
             return DriverManager.getConnection(
                     properties.getProperty("jdbc.url"),
-                    properties.getProperty("login"),
-                    properties.getProperty("password")
+                    properties.getProperty("db.login"),
+                    properties.getProperty("db.password")
             );
         } catch (Exception e) {
             throw new PostgresConnectionException(e.getMessage());
@@ -40,7 +30,14 @@ public class PostgresConnection
 
     public static Connection getConnection() throws PostgresConnectionException {
         return new PostgresConnection().createConnection();
-    }*/
+    }
 
+        /*private final static String HOST = "jdbc:postgresql://localhost:5432/weapon";
+    private final static String USERNAME = "postgres";
+    private final static String PASSWORD = "111231";
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+    }*/
 
 }

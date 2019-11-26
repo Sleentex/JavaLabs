@@ -1,6 +1,6 @@
 package Lab5.model;
 
-import Lab4.service.IntSize;
+import Lab4.service.IntRange;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.validation.ConstraintViolation;
@@ -28,7 +28,6 @@ public class Weapon implements Serializable {
     @NotNull(message = "must be not null")
     private Long id;
 
-
     @NotNull(message = "must be not null")
     @Size(min = 1, max = 20, message = "must be not empty")
     private String name;
@@ -37,12 +36,12 @@ public class Weapon implements Serializable {
     private WeaponType weaponType;
 
     @NotNull(message = "must be not null")
-    @IntSize(min = 1, max = 10)
+    @IntRange(min = 1, max = 10)
     //@Range
     private Integer weight;
 
     @NotNull(message = "must be not null")
-    @IntSize(min = 1, max = 100)
+    @IntRange(min = 1, max = 100)
     private Integer damage;
 
     @NotNull(message = "must be not null")
@@ -51,11 +50,11 @@ public class Weapon implements Serializable {
     private Integer ammo; //патрони
 
     @NotNull(message = "must be not null")
-    @IntSize(min = 0, max = 10)
+    @IntRange(min = 0, max = 10)
     private Integer rateOfFire; //задержка перед наступним вистрелом
 
     @NotNull(message = "must be not null")
-    @IntSize(min = 0, max = 1000)
+    @IntRange(min = 0, max = 1000)
     private Integer maxRange; //максимальна дальність
 
     private Weapon() {

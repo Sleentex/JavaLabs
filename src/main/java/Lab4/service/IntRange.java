@@ -7,9 +7,9 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.PARAMETER})
-@Constraint(validatedBy = IntSizeValidator.class)
+@Constraint(validatedBy = IntRangeValidator.class)
 
-public @interface IntSize {
+public @interface IntRange {
     int min();
     int max();
 

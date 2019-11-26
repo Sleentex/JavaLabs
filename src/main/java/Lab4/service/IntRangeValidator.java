@@ -3,14 +3,14 @@ package Lab4.service;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class IntSizeValidator implements ConstraintValidator<IntSize, Integer> {
+public class IntRangeValidator implements ConstraintValidator<IntRange, Integer> {
     private int minAnnotation;
     private int maxAnnotation;
 
     @Override
-    public void initialize(IntSize intSize) {
-        this.minAnnotation = intSize.min();
-        this.maxAnnotation = intSize.max();
+    public void initialize(IntRange intRange) {
+        this.minAnnotation = intRange.min();
+        this.maxAnnotation = intRange.max();
     }
 
     @Override
