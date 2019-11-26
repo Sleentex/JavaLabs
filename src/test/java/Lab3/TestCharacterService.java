@@ -109,7 +109,7 @@ public class TestCharacterService {
         character.addWeapon(weaponEagle);
         character.addWeapon(weaponAK47);
 
-        boolean actual = characterService.searchWeaponByName("Desert Eagle");
+        boolean actual = characterService.isExistWeaponByName("Desert Eagle");
         Assert.assertTrue(actual);
     }
 }

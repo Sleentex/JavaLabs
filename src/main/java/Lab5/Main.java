@@ -16,8 +16,8 @@ public class Main {
             Connection connection = PostgresConnection.getConnection();
             Statement statement = connection.createStatement();
             //statement.executeUpdate(DatabaseStructure.createTables());
-            //statement.execute("INSERT INTO weapons VALUES(2, 'M4A1', 'RIFLE1', 5, 6, 7, 8, 9)");
-
+            //statement.execute("INSERT INTO weapons VALUES(3, 'M4A1', 'RIFLE2', 5, 6, 7, 8, 9)");
+            //statement.executeUpdate("DELETE FROM weapons ");
             if(!connection.isClosed()) {
                 System.out.println("Соединение с БД установлено!");
             }
@@ -25,7 +25,7 @@ public class Main {
             if(connection.isClosed()) {
                 System.out.println("Соединение с БД закрыто!");
             }
-        } catch (SQLException | PostgresConnectionException e) {
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
             //"Неудалось загрузить БД!"
         }

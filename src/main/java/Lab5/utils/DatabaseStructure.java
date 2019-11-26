@@ -1,6 +1,7 @@
 package Lab5.utils;
 
 import Lab5.connection.PostgresConnection;
+import Lab5.exceptions.PostgresConnectionException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,14 +14,14 @@ public class DatabaseStructure {
     private static final String CREATE_CHARACTERS = "CREATE TABLE characters (id SERIAL NOT NULL PRIMARY KEY,name VARCHAR(100) NOT NULL,health integer NOT NULL,weapon_id integer NOT NULL REFERENCES weapons(id))";
     private static final String DROP_CHARACTERS = "DROP TABLE characters";
 
-    public static void createTables() throws SQLException {
+    public static void createTables() throws SQLException, PostgresConnectionException {
         Connection connection = PostgresConnection.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(CREATE_WEAPONS);
         statement.executeUpdate(CREATE_CHARACTERS);
     }
 
-    public static void dropTables() throws SQLException {
+    public static void dropTables() throws SQLException, PostgresConnectionException {
         Connection connection = PostgresConnection.getConnection();
         Statement statement = connection.createStatement();
         statement.executeUpdate(DROP_WEAPONS);

@@ -5,11 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Character {
-    private static Integer maxWeight = 10;
-    private static Integer maxHealth = 100;
+    private Long id;
     private Set<Weapon> weapons;
     private Integer health;
     private String name;
+    private static Integer maxWeight = 10;
+    private static Integer maxHealth = 100;
 
     {
         weapons = new HashSet<Weapon>();
@@ -27,6 +28,14 @@ public class Character {
             this.health = maxHealth;
         else
             this.health = health;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getHealth() {

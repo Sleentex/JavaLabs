@@ -26,7 +26,7 @@ public class Weapon implements Serializable {
     // all fields cant be changed and assigned once in builder
 
     @NotNull(message = "must be not null")
-    private Integer id;
+    private Long id;
 
 
     @NotNull(message = "must be not null")
@@ -62,7 +62,7 @@ public class Weapon implements Serializable {
         //Private constructor to deny creating new instance outside by constructor
     }
 
-    public Integer getId() { return id; }
+    public Long getId() { return id; }
     public String getName() { return name; }
     public WeaponType getWeaponType() { return weaponType; }
     public Integer getWeight() { return weight; }
@@ -126,7 +126,7 @@ public class Weapon implements Serializable {
             weapon = new Weapon();
         }
 
-        public Builder setId(Integer id) {
+        public Builder setId(Long id) {
             weapon.id = id;
             return this;
         }
