@@ -2,12 +2,9 @@ package Lab5.connection;
 
 import Lab5.exceptions.PostgresConnectionException;
 
-import javax.management.PersistentMBean;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 public class PostgresConnection

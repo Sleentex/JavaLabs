@@ -25,7 +25,7 @@ public class Weapon implements Serializable {
 
     // all fields cant be changed and assigned once in builder
 
-    @NotNull(message = "must be not null")
+    //@NotNull(message = "must be not null")
     private Long id;
 
     @NotNull(message = "must be not null")
@@ -37,7 +37,6 @@ public class Weapon implements Serializable {
 
     @NotNull(message = "must be not null")
     @IntRange(min = 1, max = 10)
-    //@Range
     private Integer weight;
 
     @NotNull(message = "must be not null")
