@@ -69,6 +69,10 @@ public class Weapon implements Serializable {
     public Integer getRateOfFire() { return rateOfFire; }
     public Integer getMaxRange() { return maxRange; }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "Weapon{" +

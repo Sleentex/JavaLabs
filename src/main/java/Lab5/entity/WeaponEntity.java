@@ -3,25 +3,30 @@ package Lab5.entity;
 import Lab5.model.Weapon;
 
 public class WeaponEntity {
+    private Weapon weapon;
+    private Integer ammo;
 
-    public enum WeaponType1 {
-        PISTOL,
-        RIFLE,
-        SNIPER_RIFLE
+    public Weapon getWeapon() {
+        return weapon;
     }
 
-    private String name;
-    private Weapon.WeaponType weaponType;
-    private Integer weight;
-    private Integer damage;
-    private Integer ammo; //патрони
-    private Integer rateOfFire; //задержка перед наступним вистрелом
-    private Integer maxRange; //максимальна дальність
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+    }
 
-    public WeaponEntity(Weapon weapon, Integer ammo) {
-        this.name = weapon.getName();
-        this.weaponType = weapon.getWeaponType();
+    public Integer getAmmo() {
+        return ammo;
+    }
+
+    public void setAmmo(Integer ammo) {
         this.ammo = ammo;
     }
 
+    @Override
+    public String toString() {
+        return "CharacterWeapon{" +
+                "weapon=" + weapon +
+                ", ammo=" + ammo +
+                '}';
+    }
 }

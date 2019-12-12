@@ -11,6 +11,7 @@ import Lab5.model.Weapon;
 import Lab5.utils.DatabaseStructure;
 
 import java.sql.*;
+import java.util.Optional;
 
 public class Main {
     private static final String CREATE_WEAPONS = "CREATE TABLE weapons (id SERIAL NOT NULL PRIMARY KEY,name VARCHAR(100) NOT NULL,weaponType VARCHAR(15) NOT NULL,weight integer NOT NULL,damage integer NOT NULL,ammo integer NOT NULL,rateOfFire integer NOT NULL, maxRange integer NOT NULL)";
@@ -44,9 +45,9 @@ public class Main {
             //statement.execute("INSERT INTO weapons VALUES(3, 'M4A1', 'RIFLE2', 5, 6, 7, 8, 9)");
             //statement.executeUpdate("DELETE FROM weapons ");
 
+
             Weapon weapon = new Weapon.Builder()
-                    .setId((long) 1)
-                    .setName("M4A1234")
+                    .setName("M4A1qq")
                     .setWeaponType(Weapon.WeaponType.RIFLE)
                     .setDamage(2)
                     .setWeight(4)
@@ -54,6 +55,16 @@ public class Main {
                     .setMaxRange(150)
                     .setRateOfFire(4)
                     .build();
+            WeaponDao weaponDao = new WeaponDao();
+            Long id = weaponDao.save(weapon);
+            weapon.setId(id);
+
+            Optional<Weapon> weaponOptional = weaponDao.findById(weapon.getId());
+            if (weaponOptional.isPresent()) {
+                Weapon weapon1 = weaponOptional.get();
+                System.out.println("LOH");
+            }
+            System.out.println(weaponOptional);
 
             /*Weapon weapon1 = new Weapon.Builder()
                     .setId((long) 3)
@@ -66,25 +77,29 @@ public class Main {
                     .setRateOfFire(4)
                     .build();*/
 
-            WeaponDao weaponDao = new WeaponDao();
+            //WeaponDao weaponDao = new WeaponDao();
            // Long id = weaponDao.save(weapon);
            // System.out.println(id);
             //weaponDao.update(weapon1);
             //weaponDao.delete(weapon);
 
-            Character character = new Character((long) 1, "Naruto", 100);
+            //Character character = new Character((long) 1, "Naruto", 100);
             CharacterDao characterDao = new CharacterDao();
             //characterDao.save(character);
-           // characterDao.addWeapon(character, weapon, 90);
+            // characterDao.addWeapon(character, weapon, 90);
 
-            System.out.println(character.getCharacterWeapons());
+            Optional<Character> optionalCharacter = characterDao.findById(1L);
+            if (optionalCharacter.isPresent()) {
+                Character character = optionalCharacter.get();
+                System.out.println(characterDao.getWeapons(character));
+            }
 
             /*Optional<Weapon> optionalWeapon = weaponDao.findById((long) 2);
             if (optionalWeapon.isPresent()) {
                 String s = optionalWeapon.get().toString();
                 System.out.println(s);
             } else {
-                System.out.println("Ty sho ebobo" );
+                System.out.println("Ty sho ebobo");
             }*/
 
             //System.out.println(weaponDao.findAll());
@@ -140,7 +155,7 @@ public class Main {
             if(connection.isClosed()) {
                 System.out.println("Соединение с БД закрыто!");
             }
-        } catch (SQLException | PostgresConnectionException e) {
+        } catch (SQLException | PostgresConnectionException | CharacterDaoException | WeaponDaoException e) {
             System.err.println(e.getMessage());
             //"Неудалось загрузить БД!"
         }

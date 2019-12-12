@@ -14,7 +14,7 @@ import java.util.Optional;
 public class WeaponDao implements Dao<Weapon>{
     private static final String GET_BY_ID = "SELECT * FROM weapons WHERE id=?";
     private static final String GET_ALL_WEAPONS = "SELECT * FROM weapons";
-    private static final String INSERT_WEAPONS = "INSERT INTO weapons(id, name, weaponType, weight, damage, ammo, rateoffire, maxrange) VALUES(?,?,?,?,?,?,?,?)";
+    private static final String INSERT_WEAPONS = "INSERT INTO weapons(name, weaponType, weight, damage, ammo, rateoffire, maxrange) VALUES(?,?,?,?,?,?,?)";
     private static final String UPDATE_WEAPONS = "UPDATE weapons SET name=?, weaponType=?, weight=?, damage=?, ammo=?, rateoffire=?, maxrange=? WHERE id=?";
     private static final String DELETE_WEAPONS = "DELETE FROM weapons WHERE id=?";
 
@@ -48,7 +48,6 @@ public class WeaponDao implements Dao<Weapon>{
         } catch (Exception e) {
             throw new WeaponDaoException(e.getMessage());
         }
-
         return Optional.empty();
     }
 
@@ -84,14 +83,14 @@ public class WeaponDao implements Dao<Weapon>{
         try {
             Long idResult = null;
             PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_WEAPONS, new String[]{"id"});
-            preparedStatement.setLong(1, weapon.getId());
-            preparedStatement.setString(2, weapon.getName());
-            preparedStatement.setString(3, weapon.getWeaponType().toString());
-            preparedStatement.setInt(4, weapon.getWeight());
-            preparedStatement.setInt(5, weapon.getDamage());
-            preparedStatement.setInt(6, weapon.getAmmo());
-            preparedStatement.setInt(7, weapon.getRateOfFire());
-            preparedStatement.setInt(8, weapon.getMaxRange());
+            //preparedStatement.setLong(1, weapon.getId());
+            preparedStatement.setString(1, weapon.getName());
+            preparedStatement.setString(2, weapon.getWeaponType().toString());
+            preparedStatement.setInt(3, weapon.getWeight());
+            preparedStatement.setInt(4, weapon.getDamage());
+            preparedStatement.setInt(5, weapon.getAmmo());
+            preparedStatement.setInt(6, weapon.getRateOfFire());
+            preparedStatement.setInt(7, weapon.getMaxRange());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {

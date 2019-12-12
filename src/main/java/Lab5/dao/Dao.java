@@ -3,7 +3,6 @@ package Lab5.dao;
 import Lab5.exceptions.CharacterDaoException;
 import Lab5.exceptions.WeaponDaoException;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

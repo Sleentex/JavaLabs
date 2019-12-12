@@ -2,9 +2,8 @@ package Lab5.dao;
 
 import Lab5.connection.PostgresConnection;
 import Lab5.exceptions.CharacterDaoException;
-import Lab5.exceptions.WeaponDaoException;
 import Lab5.model.Character;
-import Lab5.model.CharacterWeapon;
+import Lab5.entity.WeaponEntity;
 import Lab5.model.Weapon;
 
 import java.sql.Connection;
@@ -15,10 +14,12 @@ import java.util.*;
 public class CharacterDao implements Dao<Character> {
     private static final String GET_BY_ID = "SELECT * FROM characters WHERE id=?";
     private static final String GET_ALL_CHARACTERS = "SELECT * FROM characters";
-    private static final String INSERT_CHARACTERS = "INSERT INTO characters(id, name, health) VALUES(?,?,?)";
+    private static final String INSERT_CHARACTERS = "INSERT INTO characters(name, health) VALUES(?,?)";
     private static final String UPDATE_CHARACTERS = "UPDATE characters SET name=?, health=? WHERE id=?";
     private static final String DELETE_CHARACTERS = "DELETE FROM characters WHERE id=?";
     private static final String INSERT_CHARACTER_WEAPONS = "INSERT INTO character_weapons VALUES(?,?,?)";
+    private static final String GET_ALL_WEAPONS = "SELECT * FROM character_weapons";
+    private static final String GET_CHARACTER_WEAPONS = "SELECT * FROM character_weapons cw JOIN weapons w ON w.id = cw.id_weapon WHERE id_character = ?";
 
     private Connection getConnection() throws CharacterDaoException {
         try {
@@ -78,9 +79,9 @@ public class CharacterDao implements Dao<Character> {
         try {
             Long idResult = null;
             PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_CHARACTERS, new String[]{"id"});
-            preparedStatement.setLong(1, character.getId());
-            preparedStatement.setString(2, character.getName());
-            preparedStatement.setInt(3, character.getHealth());
+            //preparedStatement.setLong(1, character.getId());
+            preparedStatement.setString(1, character.getName());
+            preparedStatement.setInt(2, character.getHealth());
             preparedStatement.executeUpdate();
 
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
@@ -103,6 +104,7 @@ public class CharacterDao implements Dao<Character> {
             preparedStatement.setString(1, character.getName());
             preparedStatement.setInt(2, character.getHealth());
             preparedStatement.setLong(3, character.getId());
+            preparedStatement.executeUpdate();
         } catch (Exception e) {
             throw new CharacterDaoException(e.getMessage());
         }
@@ -134,7 +136,36 @@ public class CharacterDao implements Dao<Character> {
         }
     }
 
-    public Set<CharacterWeapon> getWeapons() {
-        return new HashSet<CharacterWeapon>();
+    public List<WeaponEntity> getWeapons(Character character) throws CharacterDaoException {
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(GET_CHARACTER_WEAPONS);
+            preparedStatement.setLong(1, character.getId());
+            ResultSet rs = preparedStatement.executeQuery();
+            List<WeaponEntity> weaponEntities = new ArrayList<>();
+
+            while (rs.next()) {
+                WeaponEntity weaponEntity = new WeaponEntity();
+                weaponEntity.setAmmo(rs.getInt("ammo"));
+
+                Weapon weapon = new Weapon.Builder()
+                        .setId(rs.getLong("id"))
+                        .setName(rs.getString("name"))
+                        .setWeaponType(Weapon.WeaponType.valueOf(rs.getString("weaponType")))
+                        .setWeight(rs.getInt("weight"))
+                        .setDamage(rs.getInt("damage"))
+                        .setAmmo(rs.getInt("ammo"))
+                        .setRateOfFire(rs.getInt("rateoffire"))
+                        .setMaxRange(rs.getInt("maxrange"))
+                        .build();
+
+                weaponEntity.setWeapon(weapon);
+                weaponEntities.add(weaponEntity);
+            }
+
+            return weaponEntities;
+        } catch (Exception e) {
+            throw new CharacterDaoException(e.getMessage());
+        }
+
     }
 }

@@ -1,7 +1,10 @@
 package Lab5.model;
 
 
+import Lab5.entity.WeaponEntity;
+
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,13 +13,13 @@ public class Character {
     private Long id;
     private String name;
     private Integer health;
-    private Set<CharacterWeapon> characterWeapons;
+    private Set<WeaponEntity> weaponEntities;
 
     private static Integer maxWeight = 10;
     private static Integer maxHealth = 100;
 
     {
-        characterWeapons = new HashSet<CharacterWeapon>();
+        weaponEntities = new HashSet<WeaponEntity>();
         health = 100;
     }
 
@@ -28,6 +31,11 @@ public class Character {
 
     public Character(Long id, String name, Integer health) {
         this.id = id;
+        this.name = name;
+        this.health = health;
+    }
+
+    public Character(String name, Integer health) {
         this.name = name;
         this.health = health;
     }
@@ -67,19 +75,19 @@ public class Character {
     }
 
     public Set<Weapon> getWeapons() {
-        return characterWeapons.stream().map(CharacterWeapon::getWeapon).collect(Collectors.toSet());
+        return weaponEntities.stream().map(WeaponEntity::getWeapon).collect(Collectors.toSet());
     }
 
-    public Set<CharacterWeapon> getCharacterWeapons() {
-        return characterWeapons;
+    public Set<WeaponEntity> getWeaponEntities() {
+        return weaponEntities;
     }
 
-    public void setCharacterWeapons(Set<CharacterWeapon> characterWeapons) {
-        this.characterWeapons = characterWeapons;
+    public void setWeaponEntities(Set<WeaponEntity> weaponEntities) {
+        this.weaponEntities = weaponEntities;
     }
 
-    public Optional<CharacterWeapon> getCharacterInfo(Character character) {
-        return characterWeapons.stream()
+    public Optional<WeaponEntity> getCharacterInfo(Character character) {
+        return weaponEntities.stream()
                 .filter(e -> e.getWeapon().equals(character))
                 .findAny();
     }
@@ -105,10 +113,36 @@ public class Character {
         if(getAllWeaponWeight() + weapon.getWeight() > maxWeight)
             return false;
 
-        CharacterWeapon characterWeapon = new CharacterWeapon();
-        characterWeapon.setWeapon(weapon);
-        characterWeapon.setAmmo(ammo);
-        characterWeapons.add(characterWeapon);
+        WeaponEntity weaponEntity = new WeaponEntity();
+        weaponEntity.setWeapon(weapon);
+        weaponEntity.setAmmo(ammo);
+        weaponEntities.add(weaponEntity);
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return Objects.equals(id, character.id) &&
+                Objects.equals(name, character.name) &&
+                Objects.equals(health, character.health) &&
+                Objects.equals(weaponEntities, character.weaponEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, health, weaponEntities);
+    }
+
+    @Override
+    public String toString() {
+        return "Character{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", health=" + health +
+                ", characterWeapons=" + weaponEntities +
+                '}';
     }
 }

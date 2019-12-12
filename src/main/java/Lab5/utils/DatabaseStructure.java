@@ -29,9 +29,8 @@ public class DatabaseStructure {
     public static void dropTables() throws SQLException, PostgresConnectionException {
         Connection connection = PostgresConnection.getConnection();
         Statement statement = connection.createStatement();
+        statement.executeUpdate(DROP_CHARACTERS_WEAPONS);
         statement.executeUpdate(DROP_WEAPONS);
         statement.executeUpdate(DROP_CHARACTERS);
-        statement.executeUpdate(DROP_CHARACTERS_WEAPONS);
-
     }
 }
