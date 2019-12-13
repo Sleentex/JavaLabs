@@ -6,20 +6,20 @@ import Lab5.exceptions.CharacterDaoException;
 import Lab5.exceptions.PostgresConnectionException;
 import Lab5.model.Character;
 import Lab5.model.Weapon;
-import Lab5.entity.WeaponEntity;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.sql.Connection;
-import java.util.List;
 import java.util.Optional;
 
 public class TestCharacterDao {
     private Connection connection;
     private CharacterDao characterDao;
     private Character character;
-    private Long id;
+    private Weapon weapon;
+    private Long id_character;
+    private Long id_weapon;
 
     @BeforeClass
     public void init() throws PostgresConnectionException {
@@ -30,9 +30,9 @@ public class TestCharacterDao {
     @Test
     public void testInsert() throws CharacterDaoException {
         character = new Character("Naruto", 100);
+        id_character = characterDao.save(character);
+        character.setId(id_character);
 
-        id = characterDao.save(character);
-        character.setId(id);
     }
 
     @Test(dependsOnMethods = "testInsert")
@@ -51,11 +51,10 @@ public class TestCharacterDao {
 
     @Test(dependsOnMethods = "testInsert")
     public void testUpdate() throws CharacterDaoException {
-        Character expectedCharacter = new Character(id, "Sasuke", 90);
+        Character expectedCharacter = new Character(id_character, "Sasuke", 90);
 
         characterDao.update(expectedCharacter);
         Optional<Character> actualCharacter = characterDao.findById(character.getId());
-        System.out.println(actualCharacter);
 
         Assert.assertTrue(actualCharacter.isPresent());
         Assert.assertEquals(actualCharacter.get(), expectedCharacter);
@@ -66,29 +65,5 @@ public class TestCharacterDao {
         characterDao.delete(character.getId());
     }
 
-    /*@Test(dependsOnMethods = "testInsert")
-    public void testAddWeapon() throws CharacterDaoException {
-        Weapon weapon = new Weapon.Builder()
-                //.setId(id)
-                .setName("AK-47")
-                .setWeaponType(Weapon.WeaponType.RIFLE)
-                .setDamage(3)
-                .setWeight(4)
-                .setAmmo(90)
-                .setMaxRange(200)
-                .setRateOfFire(3)
-                .build();
 
-        characterDao.addWeapon(character, weapon, 90);
-    }
-
-    @Test(dependsOnMethods = "testInsert")
-    public void testGetWeapons() throws CharacterDaoException {
-        List<WeaponEntity> weaponEntities = characterDao.getWeapons(character);
-        for(WeaponEntity weaponEntity : weaponEntities) {
-            Weapon weapon = weaponEntity.getWeapon();
-        }
-
-        Assert.assertEquals(wea);
-    }*/
 }

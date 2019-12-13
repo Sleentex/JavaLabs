@@ -20,6 +20,7 @@ public class CharacterDao implements Dao<Character> {
     private static final String INSERT_CHARACTER_WEAPONS = "INSERT INTO character_weapons VALUES(?,?,?)";
     private static final String GET_ALL_WEAPONS = "SELECT * FROM character_weapons";
     private static final String GET_CHARACTER_WEAPONS = "SELECT * FROM character_weapons cw JOIN weapons w ON w.id = cw.id_weapon WHERE id_character = ?";
+    private static final String DELETE_CHARACTER_WEAPONS = "DELETE FROM character_weapons WHERE id_character=? AND id_weapon=?";
 
     private Connection getConnection() throws CharacterDaoException {
         try {
@@ -121,6 +122,17 @@ public class CharacterDao implements Dao<Character> {
         }
     }
 
+    public void deleteWeapons(Long id_character, Long id_weapon) throws CharacterDaoException {
+        try {
+            PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_CHARACTER_WEAPONS);
+            preparedStatement.setLong(1, id_character);
+            preparedStatement.setLong(2, id_weapon);
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new CharacterDaoException(e.getMessage());
+        }
+    }
+
     public void addWeapon(Character character, Weapon weapon, Integer ammo) throws CharacterDaoException {
         try {
             if (!character.addWeapon(weapon, ammo) || ammo > weapon.getAmmo()) return;
@@ -128,6 +140,7 @@ public class CharacterDao implements Dao<Character> {
             PreparedStatement preparedStatement = getConnection().prepareStatement(INSERT_CHARACTER_WEAPONS);
             preparedStatement.setLong(1, character.getId());
             preparedStatement.setLong(2, weapon.getId());
+            System.out.println("AddWeapon " + weapon.getId());
             preparedStatement.setInt(3, ammo);
             preparedStatement.executeUpdate();
 
